@@ -21,11 +21,4 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	</ItemGroup>
 
-
-	<ItemGroup>
-	  <Folder Include="Domain\ModelDtos\" />
-	  <Folder Include="Services\Interfaces\" />
-	  <Folder Include="Services\Repository\" />
-	  <Folder Include="Utilites\" />
-	</ItemGroup>
 </Project>
