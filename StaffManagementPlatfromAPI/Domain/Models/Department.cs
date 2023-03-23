@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Staff> Staffs { get; set; } = new List<Staff>();
+        public ICollection<Staff>? Staffs { get; set; }
     }
 }

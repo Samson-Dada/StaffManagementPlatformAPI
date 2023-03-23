@@ -1,4 +1,5 @@
-﻿using StaffManagementPlatfromAPI.Domain.Models;
+﻿using StaffManagementPlatfromAPI.DataAccess.Context;
+using StaffManagementPlatfromAPI.Domain.Models;
 using StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
 using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
@@ -7,22 +8,24 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IBaseRepository<Staff> BaseRepository => throw new NotImplementedException();
+        private readonly ApplicationContext _dbContext;
+        public UnitOfWork(ApplicationContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
-        public IBaseRepository<Department> DepartmentRepository => throw new NotImplementedException();
+        public IStaffRepository Staff { get; private set; }
 
-        public IStaffRepository StaffRepository => throw new NotImplementedException();
-
-        IDepartmentRepository IUnitOfWork.DepartmentRepository => throw new NotImplementedException();
+        public IDepartmentRepository Department { get; private set; }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _dbContext?.Dispose();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _dbContext.SaveChanges();
         }
     }
 }

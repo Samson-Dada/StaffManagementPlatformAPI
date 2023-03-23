@@ -8,11 +8,11 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly DbSet<TEntity> _dbSet;
-        private ApplicationContext _dbContex;
+        private readonly ApplicationContext _dbContex;
 
         public BaseRepository(ApplicationContext dbContex)
         {
-            _dbContex= dbContex;
+            _dbContex = dbContex;
             _dbSet = dbContex.Set<TEntity>();
         }
       
