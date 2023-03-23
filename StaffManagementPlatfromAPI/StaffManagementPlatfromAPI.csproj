@@ -23,9 +23,9 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Data\" />
 	  <Folder Include="Domain\ModelDtos\" />
+	  <Folder Include="Services\Interfaces\" />
+	  <Folder Include="Services\Repository\" />
 	  <Folder Include="Utilites\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 </Project>

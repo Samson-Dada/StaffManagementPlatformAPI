@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StaffManagementPlatfromAPI.Domain.Models;
 
-namespace StaffManagementPlatfromAPI.Data
+namespace StaffManagementPlatfromAPI.DataAccess.Context
 {
     public class ApplicationContext : DbContext
     {
