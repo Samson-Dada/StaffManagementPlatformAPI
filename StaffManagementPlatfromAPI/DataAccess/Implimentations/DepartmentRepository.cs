@@ -13,8 +13,6 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
            _dbContext = dbContex;
         }
 
-
-
         //public async Task<IEnumerable<Department>> GetAllDepartment()
         //{
         //    var allDepartment = await _dbContext.Departments.OrderBy(d => d.Name).ToListAsync();
@@ -23,7 +21,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
 
         public string GetDepartmentDescription(int id)
         {
-            var departmentDesc = _dbContext.Departments.FirstOrDefault(x => x.Equals(id));
+            var departmentDesc = _dbContext.Departments.FirstOrDefault(x => x.Id == id);
             return departmentDesc?.Description;
         }
         public IEnumerable<Department> GetDepartmentWithStaff()
@@ -32,9 +30,17 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             return departmentWitStaff;  
         }
 
-        public Department UpdateDescription(int id, string description)
+        public void UpdateDepartmentDescription(int id, string description)
         {
-            throw new NotImplementedException();
+          var department = GetById(id);
+            if (department == null)
+            {
+                throw new ArgumentException($"Department with ID {id} does not exist.");
+            }
+            department.Description = description;
+            _dbContext.SaveChanges();
+            
         }
+        
     }
 }

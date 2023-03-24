@@ -11,5 +11,8 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository
         void Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
+        bool IsExist(int id);
+
+
     }
 }

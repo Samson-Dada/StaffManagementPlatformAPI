@@ -1,4 +1,5 @@
-﻿using StaffManagementPlatfromAPI.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using StaffManagementPlatfromAPI.Domain.Models;
 using StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository;
 
 namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
@@ -9,6 +10,6 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
         string GetDepartmentDescription(int id);
         IEnumerable<Department> GetDepartmentWithStaff();
 
-        Department UpdateDescription(int id, string description);
+        void UpdateDepartmentDescription(int id, string description);
     }
 }

@@ -8,11 +8,11 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly DbSet<TEntity> _dbSet;
-        private readonly ApplicationContext _dbContex;
+        private readonly ApplicationContext _dbContext;
 
         public BaseRepository(ApplicationContext dbContex)
         {
-            _dbContex = dbContex;
+            _dbContext = dbContex;
             _dbSet = dbContex.Set<TEntity>();
         }
       
@@ -20,7 +20,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         {
             //_dbContex.Set<TEntity>().Add(entity);
           _dbSet.Add(entity);
-            _dbContex.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Delete(TEntity entity)
@@ -42,15 +42,20 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
 
         public TEntity GetById(int id)
         {
-               var entityById =  _dbSet.Find(id);
-          return  entityById;
+            var entityById = _dbSet.Find(id);
+            return entityById;
+        }
+        public bool IsExist(int id)
+        {
+            return _dbContext.Departments.Any(d => d.Id == id);
         }
 
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
-            _dbContex.Entry(entity).State = EntityState.Modified;
-            _dbContex.SaveChanges();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
+      
     }
 }
