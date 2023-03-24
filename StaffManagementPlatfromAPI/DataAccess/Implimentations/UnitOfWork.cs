@@ -12,6 +12,8 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         public UnitOfWork(ApplicationContext dbContext)
         {
             _dbContext = dbContext;
+            Department = new DepartmentRepository(_dbContext);
+            Staff = new StaffRepository(_dbContext);
         }
 
         public IStaffRepository Staff { get; private set; }
@@ -23,9 +25,9 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             _dbContext?.Dispose();
         }
 
-        public void Save()
+        public int Save()
         {
-            _dbContext.SaveChanges();
+           return _dbContext.SaveChanges();
         }
     }
 }

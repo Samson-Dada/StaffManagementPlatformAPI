@@ -18,7 +18,8 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
       
         public void Create(TEntity entity)
         {
-            _dbSet.Add(entity);
+            //_dbContex.Set<TEntity>().Add(entity);
+          _dbSet.Add(entity);
             _dbContex.SaveChanges();
         }
 
@@ -39,9 +40,10 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             return getByCondition;
         }
 
-        public void GetById(int id)
+        public TEntity GetById(int id)
         {
-            _dbSet.Find(id);
+               var entityById =  _dbSet.Find(id);
+          return  entityById;
         }
 
         public void Update(TEntity entity)

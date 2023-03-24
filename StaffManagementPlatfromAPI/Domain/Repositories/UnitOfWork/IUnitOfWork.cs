@@ -8,6 +8,6 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork
     {
         IStaffRepository Staff{ get; }
         IDepartmentRepository Department { get; }
-        void Save();
+        int Save();
     }
 }
