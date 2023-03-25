@@ -19,12 +19,12 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         //    return allDepartment;
         //}
 
-        public string GetDepartmentDescription(int id)
+        public string DepartmentDescription(int id)
         {
             var departmentDesc = _dbContext.Departments.FirstOrDefault(x => x.Id == id);
             return departmentDesc?.Description;
         }
-        public IEnumerable<Department> GetDepartmentWithStaff()
+        public IEnumerable<Department> DepartmentWithStaff()
         {
             var departmentWitStaff =  _dbContext.Departments.Include(s => s.Staffs).ToList();
             return departmentWitStaff;  

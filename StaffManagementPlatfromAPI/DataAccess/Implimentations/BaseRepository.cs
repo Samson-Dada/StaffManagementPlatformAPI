@@ -16,13 +16,18 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             _dbSet = dbContex.Set<TEntity>();
         }
       
-        public void Create(TEntity entity)
+        public async Task Create(TEntity entity)
         {
+            if(entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
             //_dbContex.Set<TEntity>().Add(entity);
-          _dbSet.Add(entity);
-            _dbContext.SaveChanges();
-        }
+              await _dbSet.AddAsync(entity);
+          await _dbContext.SaveChangesAsync();
 
+
+        }
         public void Delete(TEntity entity)
         {
             _dbSet.Remove(entity);

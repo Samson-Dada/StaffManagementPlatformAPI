@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using StaffManagementPlatfromAPI.DataAccess.Context;
 using StaffManagementPlatfromAPI.DataAccess.Implimentations;
 using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
+using StaffManagementPlatfromAPI.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("StaffManagementConnection"));
 });
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

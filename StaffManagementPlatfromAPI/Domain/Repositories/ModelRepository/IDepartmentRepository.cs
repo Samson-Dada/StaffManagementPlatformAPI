@@ -7,8 +7,8 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
     public interface IDepartmentRepository : IBaseRepository<Department>
     {
         //Task<IEnumerable<Department>> GetAllDepartment();
-        string GetDepartmentDescription(int id);
-        IEnumerable<Department> GetDepartmentWithStaff();
+        string DepartmentDescription(int id);
+        IEnumerable<Department> DepartmentWithStaff();
 
         void UpdateDepartmentDescription(int id, string description);
     }

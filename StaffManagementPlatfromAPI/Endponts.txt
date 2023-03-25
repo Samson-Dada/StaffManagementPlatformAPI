@@ -1,0 +1,19 @@
+1. Staffs
+
+2. Department
+    - Create Department 
+    - Get Department by Id
+    _ Get All Department
+    _ Get Department Description
+    _ Get Department by Name
+    _ Get Department by Staff Name
+    _ Get Department by Staff Id
+    _ Delete Department by Id
+    _ Update Department (Put)
+    - Udpate Department (Patch)
+    _ Update Department Descritpion (Patch)
+    _ Update Department Name (Patch)
+
+
+    3. Email
+    _ Provide email address with there firstName and lastName by Default with company custom address
