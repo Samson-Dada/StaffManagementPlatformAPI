@@ -1,7 +1,17 @@
 1. Staffs
+   _Create a new staff
+   - Get All Staff
+   - Get Staff buy Id
+   - Get Staff fullName
+   _ Update Staff Name
+   _Update Staff Department
+   _Update Staff Salary
+   _Delete Staff
+
+
 
 2. Department
-    - Create Department 
+    - Create Department
     - Get Department by Id
     _ Get All Department
     _ Get Department Description

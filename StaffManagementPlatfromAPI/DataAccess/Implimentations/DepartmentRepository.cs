@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StaffManagementPlatfromAPI.DataAccess.Context;
-using StaffManagementPlatfromAPI.Domain.Models;
+using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
 
 namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
@@ -30,9 +30,9 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             return departmentWitStaff;  
         }
 
-        public void UpdateDepartmentDescription(int id, string description)
+        public async void UpdateDepartmentDescription(int id, string description)
         {
-          var department = GetById(id);
+          var department = await GetById(id);
             if (department == null)
             {
                 throw new ArgumentException($"Department with ID {id} does not exist.");

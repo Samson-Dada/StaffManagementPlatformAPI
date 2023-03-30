@@ -1,18 +1,26 @@
-﻿namespace StaffManagementPlatfromAPI.Services
+﻿using Microsoft.Extensions.DependencyInjection;
+namespace StaffManagementPlatfromAPI.Services
+
 {
     public class ConfigurationCorsServices
     {
-
-
-        public ConfigurationCorsServices(IServiceCollection services)
+        public static void Configure(IServiceCollection services)
         {
-                services.AddCors(optons => 
-                optons.AddPolicy("corsPolicy", builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                ));
+
+            services.AddCors(optons =>
+            optons.AddPolicy("corsPolicy", builder =>
+            builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            ));
         }
     }
 }
-
+/*
+ builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => { 
+        policy.AllowAnyHeader()
+        .AllowAnyOrigin(); });
+});
+ */

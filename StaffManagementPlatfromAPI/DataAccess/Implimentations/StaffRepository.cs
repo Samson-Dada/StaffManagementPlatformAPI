@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StaffManagementPlatfromAPI.DataAccess.Context;
-using StaffManagementPlatfromAPI.Domain.Models;
+using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
 using System;
 
@@ -9,20 +9,17 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
     public class StaffRepository : BaseRepository<Staff>, IStaffRepository
     {
         private readonly ApplicationContext _context;
-        public StaffRepository(ApplicationContext context): base(context) { }
-      
-
-        public Task<Staff> GetByIdAsync(int id)
+        public StaffRepository(ApplicationContext context) : base(context)
         {
-            return _context.Staffs.FirstOrDefaultAsync(s => s.Id == id);
-
+            _context= context;
         }
 
-        public IEnumerable<Staff> GetAllStaff(int countStaff)
+       public async Task<IEnumerable<Staff>> GetStaffByDepartment(int DepartmentId)
         {
-            //return _context.Staffs.Select( x => x.Staffs).Take(count).ToList();
-            var allStaff = _context.Staffs.Take(countStaff).ToList();
-            return allStaff;
+         var filterStaff = await  _context.Staffs
+                .Where(s => s.DepartmentId == DepartmentId)
+                .ToListAsync();
+            return filterStaff;
         }
 
         public Task<bool> StaffExistsAsync(int StaffId)
@@ -36,6 +33,26 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         {
             var save = await _context.SaveChangesAsync() >= 0;
             return save;
+        }
+
+        public async Task<IEnumerable<Staff>> GetFullNameAsync(string searchNames)
+        {
+            var collection = _context.Staffs as IQueryable<Staff>;
+            if (string.IsNullOrWhiteSpace(searchNames))
+            {
+                return  await GetAllAsync();       
+            }
+            if(!string.IsNullOrWhiteSpace(searchNames))
+            {
+                searchNames = searchNames.Trim();
+                collection = collection.Where(x => x.FirstName.Contains(searchNames));
+
+            }
+            return await collection.OrderBy( c => c.FirstName).ToListAsync();
+           //var searchQuery = await  _context.Set<Staff>().Where(s =>
+           // s.FirstName.Contains(searchNames) &&
+           // s.LastName.Contains(searchNames)).ToListAsync();
+           // return searchQuery;
         }
 
         //public Task<Staff> GetByNameAsync(string name)

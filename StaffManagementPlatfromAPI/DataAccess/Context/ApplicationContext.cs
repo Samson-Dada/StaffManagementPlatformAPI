@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StaffManagementPlatfromAPI.Domain.Models;
-using System.Net;
-using System.Numerics;
+using StaffManagementPlatfromAPI.Domain.Entities;
 
 namespace StaffManagementPlatfromAPI.DataAccess.Context
 {

@@ -7,7 +7,7 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository
 
         Task<IEnumerable<TEntity>> GetByConditionAsync(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        TEntity GetById(int id);
+        Task<TEntity> GetById(int id);
         Task Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

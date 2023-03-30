@@ -12,13 +12,13 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         public UnitOfWork(ApplicationContext dbContext)
         {
             _dbContext = dbContext;
-            Department = new DepartmentRepository(_dbContext);
-            Staff = new StaffRepository(_dbContext);
+            DepartmentRepository = new DepartmentRepository(_dbContext);
+            StaffRepository = new StaffRepository(_dbContext);
         }
 
-        public IStaffRepository Staff { get; private set; }
+        public IStaffRepository StaffRepository { get; private set; }
 
-        public IDepartmentRepository Department { get; private set; }
+        public IDepartmentRepository DepartmentRepository { get; private set; }
 
         public void Dispose()
         {

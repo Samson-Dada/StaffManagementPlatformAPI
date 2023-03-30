@@ -12,8 +12,8 @@ using StaffManagementPlatfromAPI.DataAccess.Context;
 namespace StaffManagementPlatfromAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230323155640_SeedData")]
-    partial class SeedData
+    [Migration("20230328041935_initalMigration")]
+    partial class initalMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Models;
 using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
 
@@ -11,75 +13,86 @@ namespace StaffManagementPlatfromAPI.Controllers
     public class DepartmentController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public DepartmentController(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public DepartmentController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork= unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+           _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllDepartment()
+        public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetAllDepartment()
         {
-           var department =  await _unitOfWork.Department.GetAllAsync();
-
-            return Ok(department);
+           var department =  await _unitOfWork.DepartmentRepository.GetAllAsync();
+            var departmentMapp = _mapper.Map<IEnumerable<DepartmentDto>>(department);
+            return Ok(departmentMapp);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult GetDepartmentById(int id)
+        [HttpGet("{id}", Name ="GetDepartmentById")]
+        public IActionResult GetDepartmentById(int id)
         {
-            var getWithId = _unitOfWork.Department.GetById(id);
-            return Ok(getWithId);
+            var departmentById = _unitOfWork.DepartmentRepository.GetById(id);
+            if(departmentById == null)
+            {
+                return NotFound("Id does not exits!");
+            }
+            var map = _mapper.Map<DepartmentDto>(departmentById);
+            return Ok(map);
         }
 
-        [HttpGet("{id}/description")]
-        public ActionResult GetDepartmentDescription(int id)
+        [HttpGet("{id}/descriptions")]
+        public IActionResult GetDepartmentDescription(int id)
         {
-            if(!_unitOfWork.Department.IsExist(id))
+            if(!_unitOfWork.DepartmentRepository.IsExist(id))
             {
                 return NotFound();
             }
-            var description = _unitOfWork.Department.DepartmentDescription(id);
+            var description = _unitOfWork.DepartmentRepository.DepartmentDescription(id);
             return Ok(description);
         }
 
 
-        [HttpGet("staffs")]
-        public ActionResult GetDepartmentWithStaff()
+        [HttpGet("{id}/staffs")]
+        public async Task<ActionResult<IEnumerable<StaffDto>>> GetStaffInDepartment(int id)
         {
-            var departmentWitStaff = _unitOfWork.Department.DepartmentWithStaff();
-            return Ok(departmentWitStaff);
+
+            var department = await _unitOfWork.DepartmentRepository.GetById(id);
+            if(department is null)
+            {
+                return NotFound("Department not found");
+            }
+            var staffInDepartment = await _unitOfWork.StaffRepository.GetStaffByDepartment(department.Id);
+
+            var map = _mapper.Map<IEnumerable<StaffDto>>(staffInDepartment).ToList();
+            return Ok(map);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateDepartment([FromBody] Department department)
+        public async Task<ActionResult<DepartmentDto>> CreateDepartment([FromBody] DepartmentDto departmentDto)
         {
             try
             {
+                var department = _mapper.Map<Department>(departmentDto);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if(department is null)
-            {
-                return BadRequest("Department object is null");
-            }
-          await  _unitOfWork.Department.Create(department);
-            return CreatedAtAction(nameof(GetDepartmentById), 
-                new {id = department.Id},department);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
-            }
+              await  _unitOfWork.DepartmentRepository.Create(department);
+                 _unitOfWork.Save();
+                var createdDepartmentDto = _mapper.Map<DepartmentDto>(department);
 
+                return CreatedAtAction(nameof(GetDepartmentById), new { id = createdDepartmentDto.Id }, createdDepartmentDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to create department: {ex.Message}");
+            }
         }
+         
 
 
-        [HttpPut("{id}/description")]
-        public ActionResult UpdateDepartmentDescription(int id,[FromBody] string description)
+        [HttpPut("{id}/descriptions")]
+        public IActionResult UpdateDepartmentDescription(int id,[FromBody] string description)
         {
-             _unitOfWork.Department.GetById(id);
+             _unitOfWork.DepartmentRepository.GetById(id);
             if (string.IsNullOrWhiteSpace(description))
             {
                 return NotFound();
@@ -89,10 +102,10 @@ namespace StaffManagementPlatfromAPI.Controllers
         }
 
 
-        [HttpPatch("{id}/description")]
-        public IActionResult PartialUpdateDescription(int id, JsonPatchDocument<Department> patchDescription, string description)
+        [HttpPatch("{id}/descriptions")]
+        public async Task<IActionResult> PartialUpdateDescription(int id, JsonPatchDocument<Department> patchDescription, string description)
         {
-         var department =  _unitOfWork.Department.GetById(id);
+         var department = await  _unitOfWork.DepartmentRepository.GetById(id);
             if (department is null)
             {
                 return NotFound();
@@ -106,14 +119,14 @@ namespace StaffManagementPlatfromAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _unitOfWork.Department.Update(department);
+            _unitOfWork.DepartmentRepository.Update(department);
             try
             {
                 _unitOfWork.Save(); 
             }
             catch (DbUpdateConcurrencyException) 
             {
-                if (!_unitOfWork.Department.IsExist(id))
+                if (!_unitOfWork.DepartmentRepository.IsExist(id))
                 {
                     return NotFound();
                 }
@@ -126,12 +139,12 @@ namespace StaffManagementPlatfromAPI.Controllers
             return Ok(department);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteDepartment(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDepartment(int id)
         {
             try
             {
-                var departmentToDelete = _unitOfWork.Department.GetById(id);
+                var departmentToDelete = await _unitOfWork.DepartmentRepository.GetById(id);
 
                 /*
                      if (departmentToDelete == null)
@@ -139,12 +152,12 @@ namespace StaffManagementPlatfromAPI.Controllers
                             return NotFound();
                         }
                  */
-                var departmentId = _unitOfWork.Department.IsExist(id);
+                var departmentId = _unitOfWork.DepartmentRepository.IsExist(id);
                 if (departmentId is false)
                 {
                     return NotFound("Department Id cannot be found!");
                 }
-                _unitOfWork.Department.Delete(departmentToDelete);
+                _unitOfWork.DepartmentRepository.Delete(departmentToDelete);
                 _unitOfWork.Save();
                 return NoContent();
             }
@@ -154,30 +167,5 @@ namespace StaffManagementPlatfromAPI.Controllers
 
             }
         }
-
-        /*
-         [HttpDelete("{id}")]
-public IActionResult DeleteDepartment(int id)
-{
-    try
-    {
-        var departmentToDelete = _unitOfWork.Department.GetById(id);
-        if (departmentToDelete == null)
-        {
-            return NotFound();
-        }
-
-        _unitOfWork.Department.Delete(departmentToDelete);
-        _unitOfWork.Save();
-
-        return NoContent();
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting department");
-    }
-}
-
-         */
     }
 }

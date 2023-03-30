@@ -45,9 +45,15 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             return getByCondition;
         }
 
-        public TEntity GetById(int id)
+        //public TEntity GetById(int id)
+        //{
+        //    var entityById = _dbSet.Find(id);
+        //    return entityById;
+        //}
+
+        public async Task<TEntity> GetById(int id)
         {
-            var entityById = _dbSet.Find(id);
+            var entityById = await _dbSet.FindAsync(id);
             return entityById;
         }
         public bool IsExist(int id)

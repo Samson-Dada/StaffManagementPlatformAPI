@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StaffManagementPlatfromAPI.Domain.Models;
+using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository;
 
 namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
