@@ -1,9 +1,9 @@
 1. Staffs
-   _Create a new staff
+   _Create a new staff with fullName(first name and last name), email, phone number
    - Get All Staff
-   - Get Staff buy Id
-   - Get Staff fullName
-   _ Update Staff Name
+   - Get Staff by Id
+   - Get Staff fullName (firstname and lastname)
+   _ Update Staff fullName (firstName and last name)
    _Update Staff Department
    _Update Staff Salary
    _Delete Staff
@@ -27,3 +27,5 @@
 
     3. Email
     _ Provide email address with there firstName and lastName by Default with company custom address
+
+    4 with database normalization, split the salary column as an entity of many to one relationship

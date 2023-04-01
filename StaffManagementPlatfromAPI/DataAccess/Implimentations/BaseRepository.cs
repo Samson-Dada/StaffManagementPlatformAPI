@@ -44,14 +44,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             var getByCondition = await _dbSet.Where(predicate).ToListAsync();
             return getByCondition;
         }
-
-        //public TEntity GetById(int id)
-        //{
-        //    var entityById = _dbSet.Find(id);
-        //    return entityById;
-        //}
-
-        public async Task<TEntity> GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
             var entityById = await _dbSet.FindAsync(id);
             return entityById;

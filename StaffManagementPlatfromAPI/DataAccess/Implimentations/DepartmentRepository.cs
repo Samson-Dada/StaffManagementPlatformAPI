@@ -32,7 +32,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
 
         public async void UpdateDepartmentDescription(int id, string description)
         {
-          var department = await GetById(id);
+          var department = await GetByIdAsync(id);
             if (department == null)
             {
                 throw new ArgumentException($"Department with ID {id} does not exist.");

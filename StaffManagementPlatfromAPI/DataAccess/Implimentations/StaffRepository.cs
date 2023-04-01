@@ -2,7 +2,6 @@
 using StaffManagementPlatfromAPI.DataAccess.Context;
 using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
-using System;
 
 namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
 {
@@ -22,43 +21,40 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             return filterStaff;
         }
 
-        public Task<bool> StaffExistsAsync(int StaffId)
+        public  async Task<bool> StaffExistsAsync(int StaffId)
         {
-            //_context.Staffs.AnyAsync(x=> x.Id == StaffId);
-            var checkStaffById = _context.Staffs.AnyAsync(x => x.Equals(StaffId));
+            if( StaffId  == 0)
+            {
+                throw new ArgumentException(null, nameof(StaffId));
+            }
+            var checkStaffById =await _context.Staffs.AnyAsync(x => x.Equals(StaffId));
             return checkStaffById;
         }
+         
 
-        public async Task<bool> SaveChangesAsync()
+        //
+        public async Task<IEnumerable<Staff>> GetAllFullNameAsync(string searchNames)
         {
-            var save = await _context.SaveChangesAsync() >= 0;
-            return save;
+            return await _context.Staffs.ToListAsync();
         }
+        //    var fullName = _context.Staffs.Select(name => name.FirstName && name.LastName).FirstOrDefault();
+        //    if (string.IsNullOrWhiteSpace(searchNames))
+        //    {
+        //        return  await GetAllAsync();       
+        //    }
+        //    if(!string.IsNullOrWhiteSpace(searchNames))
+        //    {
+        //        searchNames = searchNames.Trim();
+        //        collection = collection.Where(x => x.FirstName.Contains(searchNames));
 
-        public async Task<IEnumerable<Staff>> GetFullNameAsync(string searchNames)
-        {
-            var collection = _context.Staffs as IQueryable<Staff>;
-            if (string.IsNullOrWhiteSpace(searchNames))
-            {
-                return  await GetAllAsync();       
-            }
-            if(!string.IsNullOrWhiteSpace(searchNames))
-            {
-                searchNames = searchNames.Trim();
-                collection = collection.Where(x => x.FirstName.Contains(searchNames));
-
-            }
-            return await collection.OrderBy( c => c.FirstName).ToListAsync();
-           //var searchQuery = await  _context.Set<Staff>().Where(s =>
-           // s.FirstName.Contains(searchNames) &&
-           // s.LastName.Contains(searchNames)).ToListAsync();
-           // return searchQuery;
-        }
-
-        //public Task<Staff> GetByNameAsync(string name)
-        //{
-        //     _context.Staffs.OrderBy(x => x.FirstName && x.LastName == name);
+        //    }
+        //    return await collection.OrderBy( c => c.FirstName).ToListAsync();
+        //   //var searchQuery = await  _context.Set<Staff>().Where(s =>
+        //   // s.FirstName.Contains(searchNames) &&
+        //   // s.LastName.Contains(searchNames)).ToListAsync();
+        //   // return searchQuery;
         //}
+
 
         //public async Task<Staff> GetByFullNameAsync(string firstName, string lastName, int staffId)
         //{
@@ -68,6 +64,5 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         //    //return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
 
         //}
-
     }
 }

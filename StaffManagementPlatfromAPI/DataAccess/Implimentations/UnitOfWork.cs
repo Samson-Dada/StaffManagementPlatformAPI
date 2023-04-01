@@ -1,4 +1,5 @@
-﻿using StaffManagementPlatfromAPI.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using StaffManagementPlatfromAPI.DataAccess.Context;
 using StaffManagementPlatfromAPI.Domain.Models;
 using StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
@@ -15,7 +16,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             DepartmentRepository = new DepartmentRepository(_dbContext);
             StaffRepository = new StaffRepository(_dbContext);
         }
-
+        
         public IStaffRepository StaffRepository { get; private set; }
 
         public IDepartmentRepository DepartmentRepository { get; private set; }
@@ -25,9 +26,9 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             _dbContext?.Dispose();
         }
 
-        public int Save()
+        public async Task<int> SaveAsync()
         {
-           return _dbContext.SaveChanges();
+           return await _dbContext.SaveChangesAsync();
         }
     }
 }

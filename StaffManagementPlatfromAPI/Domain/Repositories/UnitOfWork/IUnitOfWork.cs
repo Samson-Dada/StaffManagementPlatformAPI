@@ -6,6 +6,6 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork
     {
         IStaffRepository StaffRepository{ get; }
         IDepartmentRepository DepartmentRepository { get; }
-        int Save();
+      Task<int> SaveAsync();
     }
 }

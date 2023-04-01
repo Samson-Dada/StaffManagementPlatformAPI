@@ -1,11 +1,5 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using StaffManagementPlatfromAPI.DataAccess.Context;
-using StaffManagementPlatfromAPI.DataAccess.Implimentations;
-using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
 using StaffManagementPlatfromAPI.Services;
 using StaffManagementPlatfromAPI.Services.AppServices;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
