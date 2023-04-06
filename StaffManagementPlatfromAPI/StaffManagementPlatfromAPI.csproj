@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>StaffManagementPlatfromAPI.xml</DocumentationFile>
   </PropertyGroup>
 
 
@@ -23,6 +25,13 @@
 		<PackageReference Include="serilog.sinks.console" Version="4.1.0" />
 		<PackageReference Include="serilog.sinks.file" Version="5.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.27.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+
+
+
+
 	</ItemGroup>
 
 </Project>

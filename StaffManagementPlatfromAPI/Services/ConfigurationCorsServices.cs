@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
 namespace StaffManagementPlatfromAPI.Services
 
 {
@@ -6,21 +8,12 @@ namespace StaffManagementPlatfromAPI.Services
     {
         public static void Configure(IServiceCollection services)
         {
-
-            services.AddCors(optons =>
-            optons.AddPolicy("corsPolicy", builder =>
-            builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-            ));
+            services.AddCors(options =>
+             options.AddDefaultPolicy(policy => {
+                 policy.AllowAnyHeader()
+                 .AllowAnyOrigin();
+             })
+          );
         }
     }
 }
-/*
- builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy => { 
-        policy.AllowAnyHeader()
-        .AllowAnyOrigin(); });
-});
- */

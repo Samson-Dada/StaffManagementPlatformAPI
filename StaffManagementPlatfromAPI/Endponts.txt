@@ -29,3 +29,9 @@
     _ Provide email address with there firstName and lastName by Default with company custom address
 
     4 with database normalization, split the salary column as an entity of many to one relationship
+
+    5. Payroll management endpoints (Salary)
+           These endpoints can be used to manage employee payroll data,
+           such as calculating wages, deducting taxes, and issuing paychecks.
+    6. Authentication endpoints: These endpoints are used to authenticate users and provide access to the platform. 
+                                 They can include login, logout, and password reset endpoints.

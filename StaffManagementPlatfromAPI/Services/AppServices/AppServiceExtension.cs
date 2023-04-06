@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using StaffManagementPlatfromAPI.DataAccess.Context;
 using StaffManagementPlatfromAPI.DataAccess.Implimentations;
 using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace StaffManagementPlatfromAPI.Services.AppServices
@@ -23,6 +24,28 @@ namespace StaffManagementPlatfromAPI.Services.AppServices
                 builder.Configuration.GetConnectionString("StaffManagementConnection")));
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAuthentication("Bearer")
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Authentication:Issuer"],
+                        ValidAudience = builder.Configuration["Authentication:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
+                    };
+                });
+            builder.Services.AddApiVersioning(setupAction =>
+            {
+
+                setupAction.AssumeDefaultVersionWhenUnspecified = true;
+                setupAction.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                setupAction.ReportApiVersions = true;
+            });
+
             return builder.Build();
         }
        
@@ -47,6 +70,7 @@ namespace StaffManagementPlatfromAPI.Services.AppServices
                 ));
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseHttpsRedirection();
             app.UseCors("corsPolicy");
@@ -57,40 +81,4 @@ namespace StaffManagementPlatfromAPI.Services.AppServices
     }
 }
 
-/*
-  //public static WebApplication ConfigureAppPipeline(this WebApplicationBuilder builder)
-        //{
-        //    var app = builder.Build();
-        //    if (app.Environment.IsDevelopment())
-        //    {
-        //        app.UseSwagger();
-        //        app.UseSwaggerUI();
-        //        app.UseDeveloperExceptionPage();
-        //    }
-        //    app.UseAuthorization();
-        //    app.MapControllers();
-        //    return app;
-        //}
-    */
 
-
-/*
-  // Add services to the container
-    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddControllers();
-
-        builder.Services.AddScoped<ICourseLibraryRepository, 
-            CourseLibraryRepository>();
-
-        builder.Services.AddDbContext<CourseLibraryContext>(options =>
-        {
-            options.UseSqlite(@"Data Source=library.db");
-        });
-
-        builder.Services.AddAutoMapper(
-            AppDomain.CurrentDomain.GetAssemblies());
-
-        return builder.Build();
-    }
- */

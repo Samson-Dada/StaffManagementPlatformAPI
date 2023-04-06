@@ -8,5 +8,7 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
         Task<IEnumerable<Staff>> GetStaffByDepartment(int DepartmentId);
         Task<IEnumerable<Staff>> GetAllFullNameAsync(string searchNames);
         Task<bool> StaffExistsAsync(int StaffId);
+
+        Task<Staff> GetStaffByFullNameAsync(string fullName);
     }
 }

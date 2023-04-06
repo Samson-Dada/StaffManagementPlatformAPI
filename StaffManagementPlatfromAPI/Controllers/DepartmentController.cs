@@ -8,8 +8,10 @@ using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
 
 namespace StaffManagementPlatfromAPI.Controllers
 {
-    [Route("api/departments")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/departments")]
     public class DepartmentController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

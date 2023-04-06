@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StaffManagementPlatfromAPI</name>
+    </assembly>
+    <members>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffs">
+            <summary>
+            Get a list of Staff
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffById(System.Int32)">
+            <summary>
+            Get a Staff by id
+            </summary>
+            <param name="id">The id is the staff to get</param>
+            <returns>An ActionResult of {StaffFullDto} </returns>
+            <response code="200">Returns the requested Staff</response>
+        </member>
+        <member name="T:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto">
+            <summary>
+            A DTO for staff 
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Id">
+            <summary>
+            The id of the city
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.FirstName">
+            <summary>
+            The id of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.LastName">
+            <summary>
+            The FirstName of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Email">
+            <summary>
+            The LastName of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Phone">
+            <summary>
+            The LastName id of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.DateOfBirth">
+            <summary>
+            The Phone of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Address">
+            <summary>
+            The DateOfBirth of the Staff
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Salary">
+            <summary>
+            The Address of the Staff
+            
+            </summary>
+        </member>
+    </members>
+</doc>

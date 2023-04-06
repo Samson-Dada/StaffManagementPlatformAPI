@@ -37,32 +37,44 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         {
             return await _context.Staffs.ToListAsync();
         }
-        //    var fullName = _context.Staffs.Select(name => name.FirstName && name.LastName).FirstOrDefault();
-        //    if (string.IsNullOrWhiteSpace(searchNames))
-        //    {
-        //        return  await GetAllAsync();       
-        //    }
-        //    if(!string.IsNullOrWhiteSpace(searchNames))
-        //    {
-        //        searchNames = searchNames.Trim();
-        //        collection = collection.Where(x => x.FirstName.Contains(searchNames));
 
-        //    }
-        //    return await collection.OrderBy( c => c.FirstName).ToListAsync();
-        //   //var searchQuery = await  _context.Set<Staff>().Where(s =>
-        //   // s.FirstName.Contains(searchNames) &&
-        //   // s.LastName.Contains(searchNames)).ToListAsync();
-        //   // return searchQuery;
-        //}
+      
+        public async Task<Staff> GetStaffByFullNameAsync(string fullName)
+        {
 
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(fullName));
+            }
 
-        //public async Task<Staff> GetByFullNameAsync(string firstName, string lastName, int staffId)
-        //{
-        //    //return await _context.Staffs.Select(x => x.FirstName && x.LastName == id ); 
-        //    //return  await _context.Staffs.AnyAsync(s => s.Id == staffId && s.FirstName == firstName&& s.LastName == lastName);
-        //    // return await _context.Cities.AnyAsync(c => c.Id == cityId && c.Name == cityName);
-        //    //return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
+            var nameComponents = fullName.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        //}
+            if (nameComponents.Length == 1)
+            {
+                // Search for staff member with first or last name matching full name
+                var staff = await _context.Staffs.FirstOrDefaultAsync(s =>
+                    s.FirstName == fullName ||
+                    s.LastName == fullName);
+
+                return staff;
+            }
+            else if (nameComponents.Length == 2)
+            {
+                // Search for staff member with matching first and last name components
+                var firstName = nameComponents[0];
+                var lastName = nameComponents[1];
+
+                var staff = await _context.Staffs.FirstOrDefaultAsync(s =>
+                    s.FirstName == firstName &&
+                    s.LastName == lastName);
+
+                return staff;
+            }
+            else
+            {
+                // Full name contains more than two components; cannot search for staff member
+                return null;
+            }
+        }
     }
 }
