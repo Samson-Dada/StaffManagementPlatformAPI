@@ -4,6 +4,69 @@
         <name>StaffManagementPlatfromAPI</name>
     </assembly>
     <members>
+        <member name="T:StaffManagementPlatfromAPI.Controllers.DepartmentController">
+            <summary>
+            Department Controller that hadles all request response cylce for all HTTPS Verb that is use
+            </summary>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.#ctor(StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            The unit of work is use to handle data logic implimentation layer between the entities of the project,
+            The mapper is used to map object of entities and object of model to abstract non needed data from user
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.GetAllDepartment">
+            <summary>
+            Get All Departments
+            </summary>
+            <returns>Return a list of Department</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.GetDepartmentById(System.Int32)">
+            <summary>
+            Get a Department by ID
+            </summary>
+            <param name="id">The id is the Department to get</param>
+            <returns>An ActionResult  of department ID</returns>
+            <response code="200">Returns the requested Staff</response>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.GetDepartmentDescription(System.Int32)">
+            <summary>
+            Get department descriptions
+            </summary>
+            <param name="id">The id of the department to get the description</param>
+            <returns>An ActionResult of department Description</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.CreateDepartment(StaffManagementPlatfromAPI.Domain.Models.DepartmentDto)">
+            <summary>
+            
+            </summary>
+            <param name="departmentDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.GetStaffInDepartment(System.Int32)">
+            <summary>
+            Get list of staff from a department using department Id
+            </summary>
+            <param name="id">Department id</param>
+            <returns>An ActionResult StaffDto, to retrieve list of staff from department</returns>
+        </member>
+        <member name="T:StaffManagementPlatfromAPI.Controllers.StaffController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.#ctor(StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            The unit of work is use to handle data logic implimentation layer between the entities of the project,
+            The mapper is used to map object of entities and object of model to abstract non needed data from user
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
         <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffs">
             <summary>
             Get a list of Staff
@@ -17,6 +80,52 @@
             <param name="id">The id is the staff to get</param>
             <returns>An ActionResult of {StaffFullDto} </returns>
             <response code="200">Returns the requested Staff</response>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffFullNamesByNames(System.Int32)">
+            <summary>
+             get a staff fullname by id
+            </summary>
+            <param name="id">The id of the staff fullname you want to get</param>
+            <returns>Returns the requested Staff fullname by id</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetWithFullName(System.String)">
+            <summary>
+             Get Fullname of a staff
+            </summary>
+            <param name="fullNames">The fullname of the staff you want to get</param>
+            <returns>Returns the requested staff fullname by names</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffPartialDetails(System.Int32)">
+            <summary>
+            Get staff by id 
+            </summary>
+            <param name="id">The id of the staff you want to get</param>
+            <returns>Returns the staff details by ID</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.CreateNewStaff(StaffManagementPlatfromAPI.Domain.Models.StaffFullDto)">
+            <summary>
+            Create or post a new staff to database
+            </summary>
+            <param name="staffCreationDto">Enter basic details of the staff to create </param>
+            <returns>Return a succesfull or OK after create or post method is done</returns>
+            
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.DeleteStaff(System.Int32)">
+            <summary>
+             Delete a staff provided the ID is entered
+            </summary>
+            <param name="id">The ID of the staff you want to delete</param>
+            <returns>Return no content after a successfull request response cylce is done</returns>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Entities.Staff.DepartmentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Entities.Staff.DepartmentName">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto">
             <summary>
@@ -40,9 +149,16 @@
             
             </summary>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Email">
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.FullName">
             <summary>
             The LastName of the Staff
+            
+            </summary>
+            
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Email">
+            <summary>
+            The FullName of the Staff
             
             </summary>
         </member>
@@ -52,7 +168,7 @@
             
             </summary>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.DateOfBirth">
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Age">
             <summary>
             The Phone of the Staff
             
@@ -63,11 +179,39 @@
             The DateOfBirth of the Staff
             
             </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Salary">
             <summary>
             The Address of the Staff
             
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Role">
+            <summary>
+            Role of the Staff
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Salary">
+            <summary>
+            The Salary of the Satt
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.HireDate">
+            <summary>
+            Date of Employement
+            </summary>
+        </member>
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.DepartmentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:StaffManagementPlatfromAPI.Profiles.StaffProfile">
+            <summary>
+            Mapping profile class for Staff
+            </summary>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Profiles.StaffProfile.#ctor">
+            <summary>
+            Mapping profile between Staff entities and other variance of Staff models
             </summary>
         </member>
     </members>

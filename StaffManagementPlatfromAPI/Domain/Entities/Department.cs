@@ -13,7 +13,7 @@ namespace StaffManagementPlatfromAPI.Domain.Entities
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Description { get; set; }
         public ICollection<Staff> Staffs { get; set; }
             = new List<Staff>();

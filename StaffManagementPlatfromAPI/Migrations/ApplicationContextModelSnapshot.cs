@@ -22,7 +22,7 @@ namespace StaffManagementPlatfromAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Models.Department", b =>
+            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,10 +31,14 @@ namespace StaffManagementPlatfromAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
@@ -45,17 +49,29 @@ namespace StaffManagementPlatfromAPI.Migrations
                         {
                             Id = 1,
                             Description = "ricoli in informati la prieghi opomo",
-                            Name = "IT"
+                            Name = "IT & Software"
                         },
                         new
                         {
                             Id = 2,
                             Description = "ricoli in informat",
                             Name = "Sales & Marketing"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Salary, finanace",
+                            Name = "Account and Auditing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Human Resources and Training",
+                            Name = "Human Resources and Recruitment"
                         });
                 });
 
-            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Models.Staff", b =>
+            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Entities.Staff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,20 +88,33 @@ namespace StaffManagementPlatfromAPI.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
@@ -100,44 +129,63 @@ namespace StaffManagementPlatfromAPI.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
                             DepartmentId = 1,
+                            DepartmentName = "IT & Software",
                             Email = "joh@mail.com",
-                            FirstName = "John",
+                            FirstName = "Kemi",
                             HireDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Deo",
+                            LastName = "Salem",
                             Phone = "234 555 555",
+                            Role = "Software Tester",
                             Salary = 80001.3m
                         },
                         new
                         {
                             Id = 2,
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 2,
-                            Email = "joh@mail.com",
-                            FirstName = "John",
+                            DepartmentId = 1,
+                            DepartmentName = "IT & Software",
+                            Email = "brose@mail.com",
+                            FirstName = "Brown",
                             HireDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Deo",
+                            LastName = "Seun",
                             Phone = "234 555 555",
+                            Role = "UI & UX Designer",
                             Salary = 60000.3m
                         },
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
                             DepartmentId = 2,
                             Email = "joh@mail.com",
                             FirstName = "John",
                             HireDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastName = "Deo",
                             Phone = "234 555 555",
+                            Role = "Software Engineer",
+                            Salary = 0m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
+                            DepartmentId = 2,
+                            DepartmentName = "Sales & Marketing",
+                            Email = "obieme@mail.com",
+                            FirstName = "Obi",
+                            HireDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Emefiele",
+                            Phone = "234 555 555",
+                            Role = "Product and Digital Marketing",
                             Salary = 0m
                         });
                 });
 
-            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Models.Staff", b =>
+            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Entities.Staff", b =>
                 {
-                    b.HasOne("StaffManagementPlatfromAPI.Domain.Models.Department", "Department")
+                    b.HasOne("StaffManagementPlatfromAPI.Domain.Entities.Department", "Department")
                         .WithMany("Staffs")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -146,7 +194,7 @@ namespace StaffManagementPlatfromAPI.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Models.Department", b =>
+            modelBuilder.Entity("StaffManagementPlatfromAPI.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Staffs");
                 });

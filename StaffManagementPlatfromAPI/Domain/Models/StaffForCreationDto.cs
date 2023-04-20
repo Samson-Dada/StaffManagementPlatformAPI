@@ -5,12 +5,19 @@ namespace StaffManagementPlatfromAPI.Domain.Models
     public class StaffForCreationDto
     {
         [Required]
-        [StringLength(50)]
         public int Age { get; set; }
 
         [Required]
         [StringLength(60)]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(60)]
+        public string LastName { get; set; }
+
+        [Required]
+        public string Role { get; set; }    
+
 
         [Required]
         [StringLength(50)]
@@ -24,8 +31,8 @@ namespace StaffManagementPlatfromAPI.Domain.Models
         [StringLength(50)]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        public int DepartmentId { get; set; }
+        //[Required]
+        //public int DepartmentId { get; set; }
 
 
     }

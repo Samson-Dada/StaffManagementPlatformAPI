@@ -23,14 +23,24 @@ namespace StaffManagementPlatfromAPI.Domain.Entities
         public DateTime DateOfBirth { get; set; } = new DateTime().ToLocalTime();
 
         //[Required]
-        [MaxLength(25)]
+        [MaxLength(30)]
+        public string Role { get; set; } = string.Empty;
         public string Address { get; set; }
         public decimal Salary { get; set; }
         public DateTime HireDate { get; set; }
-
-        [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [ForeignKey("DepartmentId")]
         public int DepartmentId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DepartmentName { get; set; }
+
     }
 }
 

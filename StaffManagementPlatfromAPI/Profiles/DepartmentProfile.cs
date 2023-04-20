@@ -13,6 +13,8 @@ namespace StaffManagementPlatfromAPI.Profiles
             CreateMap<Department, DepartmentWithStaffDto>();
            // CreateMap<Staff, StaffDto>();
             CreateMap<DepartmentDescriptionUpdateDto, Department>();
+            CreateMap<StaffDto, Staff>();
+            CreateMap<Staff, StaffDto>();
         }
     }
 }
