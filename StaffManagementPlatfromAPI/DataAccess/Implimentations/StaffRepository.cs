@@ -14,20 +14,13 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
         }
 
 
-        //public async Task<List<Staff>> GetAllAsyncStaff()
-        //{
-        //    //var allEntity = await _dbSet.ToListAsync();
-        //    var allEntity = await _context.Staffs.Where(x => x.Id == 1).ToListAsync();
-        //    return allEntity;
-        //}
-
-
-
-        public async Task GetAllAsyncStaff(int StaffId)
+        public async Task<List<Staff>> GetAllAsyncStaff()
         {
-            var staffs = await _context.Staffs.Where(x => x.Id == StaffId).ToListAsync();
-
+            //var allEntity = await _dbSet.ToListAsync();
+            var allEntity = await _context.Staffs.Where(x => x.Id == 1).ToListAsync();
+            return allEntity;
         }
+
         public async Task<IEnumerable<Staff>> GetStaffByDepartmentId(int DepartmentId)
         {
          var filterStaff = await  _context.Staffs.Where(s => s.DepartmentId == DepartmentId)
@@ -91,6 +84,5 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
                 return null;
             }
         }
-
     }
 }

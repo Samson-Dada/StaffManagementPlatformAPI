@@ -10,6 +10,5 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
         Task<bool> StaffExistsAsync(int StaffId);
 
         Task<Staff> GetStaffByFullNameAsync(string fullName);
-        Task GetAllAsyncStaff(int StaffId);
     }
 }

@@ -7,6 +7,7 @@ using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Models;
 using StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository;
 using StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StaffManagementPlatfromAPI.Controllers
 {/// <summary>
@@ -20,7 +21,6 @@ namespace StaffManagementPlatfromAPI.Controllers
     public class DepartmentController : ControllerBase
     {
 
-        private readonly ApplicationContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         /// <summary>
@@ -31,12 +31,11 @@ namespace StaffManagementPlatfromAPI.Controllers
         /// <param name="mapper"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public DepartmentController(IUnitOfWork unitOfWork, 
-            IMapper mapper,
-            ApplicationContext context)
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _context = context;
+        
         }
 
         /* Working */
@@ -62,9 +61,9 @@ namespace StaffManagementPlatfromAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{id}", Name ="GetDepartmentById")]
-        public IActionResult GetDepartmentById(int id)
+        public async Task<IActionResult> GetDepartmentById(int id)
         {
-            var departmentById = _unitOfWork.DepartmentRepository.GetByIdAsync(id);
+            var departmentById =await _unitOfWork.DepartmentRepository.GetByIdAsync(id);
             if(departmentById == null)
             {
                 return NotFound("Id does not exits!");
@@ -90,7 +89,6 @@ namespace StaffManagementPlatfromAPI.Controllers
             return Ok(description);
         }
 
-        /*working partially, generating us expected id*/
         /// <summary>
         /// Create or post new Department with name and description
         /// </summary>
@@ -123,7 +121,7 @@ namespace StaffManagementPlatfromAPI.Controllers
         /// Update the Department, name and Description
         /// </summary>
         /// <param name="id">Department ID</param>
-        /// <param name="departmentDto">Department to updatr</param>
+        /// <param name="departmentDto">Department to update</param>
         /// <returns>ACtionResult of the department to update</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDepartment(int id, DepartmentGetDto departmentDto)
@@ -152,14 +150,14 @@ namespace StaffManagementPlatfromAPI.Controllers
         }
 
         /// <summary>
-        /// Update the entire description of the provided ID
+        /// Update the entire description content of the department Id
         /// </summary>
         /// <param name="id">Department ID</param>
-        /// <param name="description">Description to update to</param>
+        /// <param name="descriptionDto">new Description update to</param>
         /// <returns>An ActionResult of the Description</returns>
-        /*Not Working*/
         [HttpPut("{id}/descriptions")]
-        public async Task<IActionResult> UpdateDepartmentDescription(int id, [FromBody] string description)
+        public async Task<IActionResult> UpdateDepartmentDescription(int id,
+       [FromBody] DepartmentDescriptionUpdateDto descriptionDto)
         {
             try
             {
@@ -168,14 +166,14 @@ namespace StaffManagementPlatfromAPI.Controllers
                 {
                     return NotFound();
                 }
-                if (string.IsNullOrWhiteSpace(description))
+                if (string.IsNullOrWhiteSpace(descriptionDto.Description))
                 {
                     return BadRequest("Description cannot be empty.");
                 }
-                department.Description = description;
+                department.Description = descriptionDto.Description;
                 _unitOfWork.DepartmentRepository.Update(department);
                 await _unitOfWork.SaveAsync();
-                var updatedDto = _mapper.Map<DepartmentDto>(department);
+                var updatedDto = _mapper.Map<DepartmentDescriptionUpdateDto>(department);
                 return Ok(updatedDto);
             }
             catch (Exception ex)
@@ -184,8 +182,10 @@ namespace StaffManagementPlatfromAPI.Controllers
             }
         }
 
+   
+
         /// <summary>
-        ///  Update the Existing descrption of the id
+        ///  Update the Existing department description by the id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="patchDescription"> Description to add</param>
