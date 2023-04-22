@@ -2,9 +2,9 @@
 
 namespace StaffManagementPlatfromAPI.Domain.Models
 {
-    public class DepartmentDto
+    public class DepartmentCreateDto
     {
-
+       
         [Required]
         [MaxLength(40)]
         public string Name { get; set; }

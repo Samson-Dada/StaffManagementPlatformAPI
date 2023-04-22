@@ -8,8 +8,11 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
     {
         //Task<IEnumerable<Department>> GetAllDepartment();
         string DepartmentDescription(int id);
-        IEnumerable<Department> DepartmentWithStaff();
+        void DepartmentWithStaff();
+
+        Task<Department> CreateStaffWithDepartmentId(int id);
 
         void UpdateDepartmentDescription(int id, string description);
+
     }
 }

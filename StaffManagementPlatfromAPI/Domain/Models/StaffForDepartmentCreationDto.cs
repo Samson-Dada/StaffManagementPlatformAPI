@@ -2,7 +2,7 @@
 
 namespace StaffManagementPlatfromAPI.Domain.Models
 {
-    public class StaffForCreationDto
+    public class StaffForDepartmentCreationDto
     {
         [Required]
         public DateTime DateOfBirth { get; set; }
@@ -26,6 +26,11 @@ namespace StaffManagementPlatfromAPI.Domain.Models
         [Required]
         [StringLength(50)]
         public string Phone{ get; set; }
+
+
+
+        [Required]
+        public int DepartmentId { get; set; }
 
         [Required]
         [StringLength(25)]

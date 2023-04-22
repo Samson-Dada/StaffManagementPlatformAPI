@@ -31,9 +31,7 @@ namespace StaffManagementPlatfromAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -129,7 +127,7 @@ namespace StaffManagementPlatfromAPI.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             DepartmentName = "IT & Software",
                             Email = "joh@mail.com",
@@ -157,7 +155,7 @@ namespace StaffManagementPlatfromAPI.Migrations
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 2,
                             Email = "joh@mail.com",
                             FirstName = "John",
@@ -170,7 +168,7 @@ namespace StaffManagementPlatfromAPI.Migrations
                         new
                         {
                             Id = 4,
-                            DateOfBirth = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 2,
                             DepartmentName = "Sales & Marketing",
                             Email = "obieme@mail.com",

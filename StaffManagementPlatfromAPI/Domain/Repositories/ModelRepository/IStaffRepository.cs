@@ -5,10 +5,11 @@ namespace StaffManagementPlatfromAPI.Domain.Repositories.ModelRepository
 {
     public interface IStaffRepository : IBaseRepository<Staff>
     {
-        Task<IEnumerable<Staff>> GetStaffByDepartment(int DepartmentId);
+        Task<IEnumerable<Staff>> GetStaffByDepartmentId(int DepartmentId);
         Task<IEnumerable<Staff>> GetAllFullNameAsync(string searchNames);
         Task<bool> StaffExistsAsync(int StaffId);
 
         Task<Staff> GetStaffByFullNameAsync(string fullName);
+        Task GetAllAsyncStaff(int StaffId);
     }
 }

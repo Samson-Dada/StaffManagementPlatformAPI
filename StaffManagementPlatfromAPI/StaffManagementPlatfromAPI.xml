@@ -9,12 +9,12 @@
             Department Controller that hadles all request response cylce for all HTTPS Verb that is use
             </summary>
         </member>
-        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.#ctor(StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.#ctor(StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,StaffManagementPlatfromAPI.DataAccess.Context.ApplicationContext)">
             <summary>
             The unit of work is use to handle data logic implimentation layer between the entities of the project,
             The mapper is used to map object of entities and object of model to abstract non needed data from user
             </summary>
-            <param name="unitOfWork"></param>
+            <param name="unitOfWork">UnitOfWork</param>
             <param name="mapper"></param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
@@ -39,12 +39,44 @@
             <param name="id">The id of the department to get the description</param>
             <returns>An ActionResult of department Description</returns>
         </member>
-        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.CreateDepartment(StaffManagementPlatfromAPI.Domain.Models.DepartmentDto)">
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.CreateDepartment(StaffManagementPlatfromAPI.Domain.Models.DepartmentCreateDto)">
             <summary>
-            
+            Create or post new Department with name and description
             </summary>
-            <param name="departmentDto"></param>
-            <returns></returns>
+            <param name="departmentCreateDto">The departments name and description to post</param>
+            <returns>ActionResult of the Department ot create</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.UpdateDepartment(System.Int32,StaffManagementPlatfromAPI.Domain.Models.DepartmentGetDto)">
+            <summary>
+            Update the Department, name and Description
+            </summary>
+            <param name="id">Department ID</param>
+            <param name="departmentDto">Department to updatr</param>
+            <returns>ACtionResult of the department to update</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.UpdateDepartmentDescription(System.Int32,System.String)">
+            <summary>
+            Update the entire description of the provided ID
+            </summary>
+            <param name="id">Department ID</param>
+            <param name="description">Description to update to</param>
+            <returns>An ActionResult of the Description</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.PartialUpdateDescription(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{StaffManagementPlatfromAPI.Domain.Entities.Department},System.String)">
+            <summary>
+             Update the Existing descrption of the id
+            </summary>
+            <param name="id"></param>
+            <param name="patchDescription"> Description to add</param>
+            <param name="description">Existing Description</param>
+            <returns> An ActionResult of the update description</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.DeleteDepartment(System.Int32)">
+            <summary>
+            Delete a department with ID
+            </summary>
+            <param name="id">Department ID to delete</param>
+            <returns>ActionResult of the department to delete</returns>
         </member>
         <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.GetStaffInDepartment(System.Int32)">
             <summary>
@@ -52,6 +84,14 @@
             </summary>
             <param name="id">Department id</param>
             <returns>An ActionResult StaffDto, to retrieve list of staff from department</returns>
+        </member>
+        <member name="M:StaffManagementPlatfromAPI.Controllers.DepartmentController.CreateDepartmentWithStaff(System.Int32,StaffManagementPlatfromAPI.Domain.Models.StaffForCreationDto)">
+            <summary>
+            Create a new Staff with the existing department id
+            </summary>
+            <param name="departmentId"> Department id</param>
+            <param name="staffForCreationDto">Staff data source to create new staff</param>
+            <returns>An ActionResult of new created Staff of deaprtment id</returns>
         </member>
         <member name="T:StaffManagementPlatfromAPI.Controllers.StaffController">
             <summary>
@@ -71,7 +111,7 @@
             <summary>
             Get a list of Staff
             </summary>
-            <returns></returns>
+            <returns>ActionResult of the list of staff</returns>
         </member>
         <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.GetStaffById(System.Int32)">
             <summary>
@@ -102,7 +142,7 @@
             <param name="id">The id of the staff you want to get</param>
             <returns>Returns the staff details by ID</returns>
         </member>
-        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.CreateNewStaff(StaffManagementPlatfromAPI.Domain.Models.StaffFullDto)">
+        <member name="M:StaffManagementPlatfromAPI.Controllers.StaffController.CreateNewStaff(StaffManagementPlatfromAPI.Domain.Models.StaffForCreationDto)">
             <summary>
             Create or post a new staff to database
             </summary>
@@ -117,89 +157,22 @@
             <param name="id">The ID of the staff you want to delete</param>
             <returns>Return no content after a successfull request response cylce is done</returns>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Entities.Staff.DepartmentId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Entities.Staff.DepartmentName">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto">
             <summary>
             A DTO for staff 
             </summary>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Id">
+        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.DepartmentName">
             <summary>
-            The id of the city
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.FirstName">
-            <summary>
-            The id of the Staff
             
             </summary>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.LastName">
+        <member name="T:StaffManagementPlatfromAPI.Domain.Models.StaffGetDto">
             <summary>
-            The FirstName of the Staff
-            
+             The staff data to return back to the user
             </summary>
         </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.FullName">
-            <summary>
-            The LastName of the Staff
-            
-            </summary>
-            
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Email">
-            <summary>
-            The FullName of the Staff
-            
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Phone">
-            <summary>
-            The LastName id of the Staff
-            
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Age">
-            <summary>
-            The Phone of the Staff
-            
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Address">
-            <summary>
-            The DateOfBirth of the Staff
-            
-            </summary>
-            <summary>
-            The Address of the Staff
-            
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Role">
-            <summary>
-            Role of the Staff
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.Salary">
-            <summary>
-            The Salary of the Satt
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.HireDate">
-            <summary>
-            Date of Employement
-            </summary>
-        </member>
-        <member name="P:StaffManagementPlatfromAPI.Domain.Models.StaffFullDto.DepartmentId">
+        <member name="T:StaffManagementPlatfromAPI.Domain.Repositories.UnitOfWork.IUnitOfWork">
             <summary>
             
             </summary>

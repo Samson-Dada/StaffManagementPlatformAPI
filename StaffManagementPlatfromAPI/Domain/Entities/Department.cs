@@ -12,8 +12,6 @@ namespace StaffManagementPlatfromAPI.Domain.Entities
         [MaxLength(40)]
         public string Name { get; set; }
 
-        [Required]
-        [MaxLength(100)]
         public string Description { get; set; }
         public ICollection<Staff> Staffs { get; set; }
             = new List<Staff>();

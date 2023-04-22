@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StaffManagementPlatfromAPI.DataAccess.Context;
+using StaffManagementPlatfromAPI.Domain.Entities;
 using StaffManagementPlatfromAPI.Domain.Repositories.BaseRepository;
 using System.Linq.Expressions;
 
@@ -38,6 +39,7 @@ namespace StaffManagementPlatfromAPI.DataAccess.Implimentations
             var allEntity = await _dbSet.ToListAsync();
             return allEntity;
         }
+       
 
         public async Task<IEnumerable<TEntity>> GetByConditionAsync(Expression<Func<TEntity, bool>> predicate)
         {

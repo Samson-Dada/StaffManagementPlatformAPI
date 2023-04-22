@@ -8,13 +8,17 @@ namespace StaffManagementPlatfromAPI.Profiles
     {
         public DepartmentProfile()
         {
-            CreateMap<Department, DepartmentDto>();
-            CreateMap<DepartmentDto, Department>();
+            // Mapping for Get() request
+            CreateMap<Department, DepartmentGetDto>();
+
+
+            // 
+            CreateMap<Department, DepartmentGetDto>();
+            CreateMap<DepartmentCreateDto, Department>();
+
+            // Mapping for Post() Request
+            CreateMap<DepartmentGetDto, Department>();
             CreateMap<Department, DepartmentWithStaffDto>();
-           // CreateMap<Staff, StaffDto>();
-            CreateMap<DepartmentDescriptionUpdateDto, Department>();
-            CreateMap<StaffDto, Staff>();
-            CreateMap<Staff, StaffDto>();
         }
     }
 }

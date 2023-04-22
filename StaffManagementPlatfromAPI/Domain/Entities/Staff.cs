@@ -20,7 +20,7 @@ namespace StaffManagementPlatfromAPI.Domain.Entities
         [MaxLength(20)]
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; } = new DateTime().ToLocalTime();
+        public DateTime DateOfBirth { get; set; }
 
         //[Required]
         [MaxLength(30)]
@@ -28,18 +28,13 @@ namespace StaffManagementPlatfromAPI.Domain.Entities
         public string Address { get; set; }
         public decimal Salary { get; set; }
         public DateTime HireDate { get; set; }
-        public Department Department { get; set; }
+        public string DepartmentName { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [ForeignKey("DepartmentId")]
         public int DepartmentId { get; set; }
+        public Department Department { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string DepartmentName { get; set; }
+       
 
     }
 }

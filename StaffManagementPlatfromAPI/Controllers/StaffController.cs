@@ -39,16 +39,19 @@ namespace StaffManagementPlatfromAPI.Controllers
         /// <summary>
         /// Get a list of Staff
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ActionResult of the list of staff</returns>
 
         //Working
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StaffFullDto>>> GetStaffs()
+        public async Task<ActionResult<IEnumerable<StaffGetDto>>> GetStaffs()
         {
             var allStaff = await _unitOfWork.StaffRepository.GetAllAsync();
-            var mapStaff = _mapper.Map<IEnumerable<StaffFullDto>>(allStaff);
+            var mapStaff = _mapper.Map<IEnumerable<StaffGetDto>>(allStaff);
             return Ok(mapStaff);
         }
+
+
+
         /// <summary>
         /// Get a Staff by id
         /// </summary>
@@ -133,34 +136,8 @@ namespace StaffManagementPlatfromAPI.Controllers
         /// <param name="staffCreationDto">Enter basic details of the staff to create </param>
         /// <returns>Return a succesfull or OK after create or post method is done</returns>
         /// 
-
-        /*[HttpPost]
-        public async Task<ActionResult<Staff>> CreateNewStaff([FromBody] Staff staff)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-               await _unitOfWork.StaffRepository.Create(staff);
-               await _unitOfWork.SaveAsync();
-                return CreatedAtAction("GetStaffById", new {id =staff.Id},staff );
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while creating a new staff member. {ex.Message}");
-
-            }
-        }
-        */
-
-
-
         [HttpPost]
-        //Task<ActionResult<PointOfInterestDto>>
-        public async Task<ActionResult<Staff>> CreateNewStaff([FromBody] StaffFullDto staffCreationDto)
+        public async Task<IActionResult> CreateNewStaff([FromBody] StaffForCreationDto staffCreationDto)
         {
             if (!ModelState.IsValid)
             {
@@ -171,8 +148,8 @@ namespace StaffManagementPlatfromAPI.Controllers
                 var staffEntity = _mapper.Map<Staff>(staffCreationDto);
                 await _unitOfWork.StaffRepository.Create(staffEntity);
                 await _unitOfWork.SaveAsync();
-                var staffDto = _mapper.Map<Staff>(staffEntity);
-                return CreatedAtAction("GetStaffById", new { id = staffDto.Id }, staffDto);
+                var staffGetDto = _mapper.Map<StaffGetDto>(staffEntity);
+                return CreatedAtAction("GetStaffById", new { id = staffEntity.Id }, staffGetDto);
             }
             catch (Exception ex)
             {
@@ -180,74 +157,6 @@ namespace StaffManagementPlatfromAPI.Controllers
 
             }
         }
-
-         
-        /*
-
-        [HttpPost]
-        public async Task<ActionResult> CreateNewStaff(StaffForCreationDto staffCreationDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var staffEntity = _mapper.Map<Staff>(staffCreationDto);
-                await _unitOfWork.StaffRepository.Create(staffEntity);
-                await _unitOfWork.SaveAsync();
-                var staffDto = _mapper.Map<Staff>(staffEntity);
-                return CreatedAtAction("GetStaffById", new { id = staffDto.Id }, staffDto);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error message: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    Console.WriteLine($"Inner exception message: {ex.InnerException.Message}");
-
-                }
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while creating a new staff member. {ex.Message}");
-
-            }
-        }
-        */
-        /*
-        [HttpPost]
-        public async Task<ActionResult> CreateNewStaff(StaffForCreationDto staffCreationDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var department = await _unitOfWork.DepartmentRepository.GetDepartmentByName(staffCreationDto.DepartmentName);
-                if (department == null)
-                {
-                    return BadRequest($"Department with name {staffCreationDto.DepartmentName} does not exist.");
-                }
-
-                var staffEntity = _mapper.Map<Staff>(staffCreationDto);
-                staffEntity.DepartmentId = department.Id;
-
-                await _unitOfWork.StaffRepository.Create(staffEntity);
-                await _unitOfWork.SaveAsync();
-
-                var staffDto = _mapper.Map<StaffForCreationDto>(staffEntity);
-                return CreatedAtAction("GetStaffById", new { id = staffDto.Id }, staffDto);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error message: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    Console.WriteLine($"Inner exception message: {ex.InnerException.Message}");
-                }
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while creating a new staff member. {ex.Message}");
-            }
-        }
-        */
 
 
         /// <summary>
